@@ -4,361 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Андрей & Шура | The Party</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-overlay: rgba(0, 0, 0, 0.75); /* Затемнение фона */
-            --accent-color: #d4af37; /* Золото */
-            --text-color: #ffffff;
-        }
-
-        body, html {
+        /* --- СТИЛИ (CSS) ВШИТЫ ПРЯМО СЮДА --- */
+        body {
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-color);
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-            background-color: #000;
-        }
-
-        /* ФОНОВАЯ КАРТИНКА (Черный мрамор с золотом) */
-        .bg-image {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1615529328331-f8b5ad008038?q=80&w=2670&auto=format&fit=crop'); 
-            background-size: cover;
-            background-position: center;
-            z-index: -4;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-overlay);
-            z-index: -3;
-        }
-
-        /* КАНВАС ДЛЯ СНЕГА */
-        #snow-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Чтобы сквозь него можно было кликать */
-            z-index: -2; /* Поверх фона и оверлея, но под контентом */
-        }
-
-        /* АНИМАЦИЯ: Светлячки (оставил, они хорошо сочетаются со снегом) */
-        .firefly {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            width: 4px;
-            height: 4px;
-            margin: -0.2em 0 0 9.8em;
-            animation: drift 200s alternate infinite;
-            pointer-events: none;
-            z-index: -1;
-            box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.4);
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-        }
-        .firefly::before {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            border-radius: 50%;
-            animation: drift 10s alternate infinite;
-        }
-        @keyframes drift {
-            0% { transform: rotate(0deg) translate(10px); }
-            100% { transform: rotate(360deg) translate(-10px); }
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Фиолетово-синий фон */
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            position: relative;
-            z-index: 1;
+            overflow: hidden; /* Чтобы анимация не делала прокрутку */
         }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s forwards;
-        }
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.5s; }
-        .delay-3 { animation-delay: 0.8s; }
-        .delay-4 { animation-delay: 1.1s; }
 
         h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
+            font-size: 3rem;
             margin-bottom: 10px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(0,0,0,0.5);
-            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            z-index: 10; /* Текст поверх анимации */
         }
 
         h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            margin-top: 50px;
-            color: var(--accent-color);
-            margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-top: 0;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            z-index: 10;
         }
-        
-        h2::after {
-            content: ''; display: block; width: 50%; height: 2px;
-            background: var(--accent-color); margin: 10px auto 0;
-            transition: width 0.3s;
-        }
-        h2:hover::after { width: 100%; }
 
         p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-weight: 300;
-        }
-
-        .date-block {
-            font-size: 1.5rem;
-            border: 1px solid var(--accent-color);
-            display: inline-block;
-            padding: 15px 40px;
-            margin: 30px 0;
-            letter-spacing: 3px;
-            color: var(--accent-color);
-            background: rgba(0,0,0,0.3);
-            transition: 0.3s;
-        }
-        .date-block:hover { background: rgba(212, 175, 55, 0.1); transform: scale(1.05); }
-
-        .humor-text {
-            font-style: italic;
-            opacity: 0.95;
-            margin-bottom: 40px;
-            background: rgba(0,0,0,0.5);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* Таймлайн */
-        .timeline {
-            text-align: left;
-            margin-top: 40px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .timeline-item {
-            display: flex;
-            margin-bottom: 25px;
-            align-items: flex-start;
-        }
-        .time {
-            font-weight: bold;
-            color: var(--accent-color);
-            min-width: 80px;
             font-size: 1.2rem;
+            max-width: 600px;
+            padding: 20px;
+            z-index: 10;
         }
-        .desc strong { display: block; color: #fff; margin-bottom: 5px; }
-        .desc { font-size: 0.95rem; color: #ddd; }
 
-        /* Кнопки */
-        .btn {
-            display: inline-block;
-            background: linear-gradient(45deg, #d4af37, #f2d06b);
-            color: #000;
-            padding: 18px 40px;
+        .button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #ff6b6b;
+            color: white;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: bold;
             border-radius: 50px;
-            margin-top: 30px;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            z-index: 10;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-            font-family: inherit;
         }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
-            background: #fff;
+        .button:hover {
+            transform: scale(1.05);
+            background-color: #ff4757;
         }
 
-        .btn-disabled {
-            background: rgba(255, 255, 255, 0.1);
-            color: #888;
-            cursor: not-allowed;
-            border: 1px solid #555;
-            box-shadow: none;
-        }
-        .btn-disabled:hover { transform: none; box-shadow: none; background: rgba(255, 255, 255, 0.1); }
-
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
+        /* Анимация падающих элементов */
+        .emoji {
+            position: fixed;
+            top: -10%;
+            font-size: 2rem;
+            animation-name: fall;
+            animation-timing-function: linear;
+            z-index: 1;
+            opacity: 0.7;
         }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            .date-block { font-size: 1.2rem; padding: 10px 20px; }
-            .timeline-item { flex-direction: column; }
-            .time { margin-bottom: 5px; }
+        @keyframes fall {
+            0% { top: -10%; transform: translateX(0) rotate(0deg); }
+            100% { top: 110%; transform: translateX(20px) rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-image"></div>
-    <div class="overlay"></div>
-    <canvas id="snow-canvas"></canvas>
+    <h1>Андрей & Шура</h1>
+    <h2>The Wedding Party</h2>
+    <p>Мы решили, что стандартные свадьбы — это скучно. Ждем вас на нашей вечеринке!</p>
     
-    <div class="firefly" style="top:20%; left:20%; animation-duration: 14s;"></div>
-    <div class="firefly" style="top:50%; left:50%; animation-duration: 20s;"></div>
-    <div class="firefly" style="top:80%; left:30%; animation-duration: 17s;"></div>
-    <div class="firefly" style="top:30%; left:80%; animation-duration: 25s;"></div>
-    
-    <div class="container">
-        <h1 class="fade-in">АНДРЕЙ & ШУРА</h1>
-        <div class="date-block fade-in delay-1">06.02.2026</div>
-        
-        <div class="humor-text fade-in delay-2">
-            <p>«Самое страшное уже случилось: бумаги подписаны. Государство в курсе. Назад дороги нет.</p>
-            <p>Мы решили избавить вас (и себя) от душной церемонии в ЗАГСе. Никаких маршей Мендельсона и теток с начесом.</p>
-            <p>Приглашаем вас сразу к самой сути — запить стресс и отпраздновать начало нашего пожизненного заключения в комфортной обстановке.»</p>
-        </div>
-
-        <h2 class="fade-in delay-3">МЕСТО ПРЕСТУПЛЕНИЯ</h2>
-        <p class="fade-in delay-3"><strong>Панорамная беседка "NA NEBO"</strong><br>
-        Мы забрались повыше, чтобы никто не видел, как мы прощаемся со свободой.</p>
-
-        <h2 class="fade-in delay-3">ХРОНОЛОГИЯ</h2>
-        <div class="timeline fade-in delay-4">
-            <div class="timeline-item">
-                <span class="time">17:00</span>
-                <div class="desc"><strong>Общая анестезия.</strong><br>Сбор гостей. Наливаем сразу, церемоний не будет.</div>
-            </div>
-            <div class="timeline-item">
-                <span class="time">17:30</span>
-                <div class="desc"><strong>Сбор дани.</strong><br>Вручение подарков. Единственный момент вечера, когда мы будем серьезными (пока считаем конверты).</div>
-            </div>
-            <div class="timeline-item">
-                <span class="time">18:00</span>
-                <div class="desc"><strong>Тайная вечеря.</strong><br>Ужин, танцы и безудержное веселье. Пытаемся забыть, что теперь мы официально женаты.</div>
-            </div>
-            <div class="timeline-item">
-                <span class="time">22:00</span>
-                <div class="desc"><strong>Амнистия.</strong><br>Вас выпустят на волю. А нам еще жить вместе.</div>
-            </div>
-        </div>
-
-        <h2 class="fade-in delay-4">ВЫ С НАМИ?</h2>
-        <p class="fade-in delay-4">Нажми, чтобы проложить маршрут:</p>
-        
-        <div class="fade-in delay-4">
-            <a href="https://yandex.ru/maps/?text=Кисловодск,+ул.+Римгорская,+25а" target="_blank" class="btn">
-                ПОКАЗАТЬ МАРШРУТ
-            </a>
-            <br><br>
-            <button class="btn btn-disabled">У МЕНЯ СПРАВКА ОТ ВРАЧА (Не работает)</button>
-        </div>
-        
-        <footer style="margin-top: 50px; font-size: 0.7rem; opacity: 0.5;">
-            *Жалобы не принимаются. Вы знали, куда шли.
-        </footer>
-
-    </div>
+    <a href="#" class="button">Я приду!</a>
 
     <script>
-        // --- Скрипт для снега ---
-        const canvas = document.getElementById('snow-canvas');
-        const ctx = canvas.getContext('2d');
+        // Функция создания анимации (падающие сердечки и бокалы)
+        function createFallingElements() {
+            const container = document.body;
+            const symbols = ['❤️', '🥂', '✨', '💍', '🎉'];
+            
+            // Создаем новый элемент каждые 300мс
+            setInterval(() => {
+                const el = document.createElement('div');
+                el.classList.add('emoji');
+                el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                // Случайная позиция по горизонтали
+                el.style.left = Math.random() * 100 + 'vw';
+                // Случайная скорость падения (от 3 до 8 секунд)
+                el.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                // Случайный размер
+                el.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                
+                container.appendChild(el);
 
-        let width, height;
-        let flakes = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+                // Удаляем элемент после падения, чтобы не грузить память браузера (Garbage Collection)
+                setTimeout(() => {
+                    el.remove();
+                }, 8000);
+            }, 300);
         }
 
-        function createFlakes() {
-            const maxFlakes = 150; // Количество снежинок
-            for (let i = 0; i < maxFlakes; i++) {
-                flakes.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    radius: Math.random() * 3 + 1, // Размер
-                    speed: Math.random() * 1 + 0.5, // Скорость падения
-                    drift: Math.random() * 1 - 0.5, // Боковой снос
-                    opacity: Math.random() * 0.5 + 0.3 // Прозрачность
-                });
-            }
-        }
-
-        function drawFlakes() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = '#FFF';
-            ctx.beginPath();
-            for (let i = 0; i < flakes.length; i++) {
-                const f = flakes[i];
-                ctx.globalAlpha = f.opacity;
-                ctx.moveTo(f.x, f.y);
-                ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2, true);
-            }
-            ctx.fill();
-            moveFlakes();
-        }
-
-        function moveFlakes() {
-            for (let i = 0; i < flakes.length; i++) {
-                const f = flakes[i];
-                f.y += f.speed;
-                f.x += f.drift;
-
-                // Если снежинка улетела вниз или вбок, возвращаем наверх
-                if (f.y > height) {
-                    f.y = 0;
-                    f.x = Math.random() * width;
-                }
-                if (f.x > width || f.x < 0) {
-                     f.drift *= -1; // Отскакиваем от краев
-                }
-            }
-        }
-
-        function animateSnow() {
-            drawFlakes();
-            requestAnimationFrame(animateSnow);
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-        createFlakes();
-        animateSnow();
+        // Запуск скрипта после загрузки
+        createFallingElements();
     </script>
+
 </body>
 </html>
