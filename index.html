@@ -30,11 +30,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Надежная HTTPS ссылка на текстуру */
             background-image: url('https://images.unsplash.com/photo-1615529328331-f8b5ad008038?q=80&w=2670&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
-            z-index: -3;
+            z-index: -4;
         }
 
         .overlay {
@@ -44,10 +43,21 @@
             width: 100%;
             height: 100%;
             background-color: var(--bg-overlay);
-            z-index: -2;
+            z-index: -3;
         }
 
-        /* АНИМАЦИЯ: Светлячки (оставил для атмосферы) */
+        /* КАНВАС ДЛЯ СНЕГА */
+        #snow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Чтобы сквозь него можно было кликать */
+            z-index: -2; /* Поверх фона и оверлея, но под контентом */
+        }
+
+        /* АНИМАЦИЯ: Светлячки (оставил, они хорошо сочетаются со снегом) */
         .firefly {
             position: fixed;
             left: 50%;
@@ -224,6 +234,7 @@
 
     <div class="bg-image"></div>
     <div class="overlay"></div>
+    <canvas id="snow-canvas"></canvas>
     
     <div class="firefly" style="top:20%; left:20%; animation-duration: 14s;"></div>
     <div class="firefly" style="top:50%; left:50%; animation-duration: 20s;"></div>
@@ -280,5 +291,74 @@
         </footer>
 
     </div>
+
+    <script>
+        // --- Скрипт для снега ---
+        const canvas = document.getElementById('snow-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let flakes = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        function createFlakes() {
+            const maxFlakes = 150; // Количество снежинок
+            for (let i = 0; i < maxFlakes; i++) {
+                flakes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 3 + 1, // Размер
+                    speed: Math.random() * 1 + 0.5, // Скорость падения
+                    drift: Math.random() * 1 - 0.5, // Боковой снос
+                    opacity: Math.random() * 0.5 + 0.3 // Прозрачность
+                });
+            }
+        }
+
+        function drawFlakes() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = '#FFF';
+            ctx.beginPath();
+            for (let i = 0; i < flakes.length; i++) {
+                const f = flakes[i];
+                ctx.globalAlpha = f.opacity;
+                ctx.moveTo(f.x, f.y);
+                ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2, true);
+            }
+            ctx.fill();
+            moveFlakes();
+        }
+
+        function moveFlakes() {
+            for (let i = 0; i < flakes.length; i++) {
+                const f = flakes[i];
+                f.y += f.speed;
+                f.x += f.drift;
+
+                // Если снежинка улетела вниз или вбок, возвращаем наверх
+                if (f.y > height) {
+                    f.y = 0;
+                    f.x = Math.random() * width;
+                }
+                if (f.x > width || f.x < 0) {
+                     f.drift *= -1; // Отскакиваем от краев
+                }
+            }
+        }
+
+        function animateSnow() {
+            drawFlakes();
+            requestAnimationFrame(animateSnow);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        createFlakes();
+        animateSnow();
+    </script>
 </body>
 </html>
