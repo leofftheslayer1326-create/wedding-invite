@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-overlay: rgba(0, 0, 0, 0.75); /* Затемнение фона */
+            --bg-overlay: rgba(0, 0, 0, 0.65); /* Чуть ослабил затемнение, чтобы было видно фото */
             --accent-color: #d4af37; /* Золото */
             --text-color: #ffffff;
         }
@@ -23,14 +23,15 @@
             background-color: #000;
         }
 
-        /* ФОНОВАЯ КАРТИНКА (Черный мрамор с золотом) */
+        /* --- ФОНОВАЯ КАРТИНКА (СВАДЕБНАЯ ТЕМАТИКА) --- */
         .bg-image {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1615529328331-f8b5ad008038?q=80&w=2670&auto=format&fit=crop'); 
+            /* Фото: Вечерние огни, боке, атмосфера вечеринки */
+            background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
             z-index: -4;
@@ -53,33 +54,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Чтобы сквозь него можно было кликать */
-            z-index: -2; /* Поверх фона и оверлея, но под контентом */
-        }
-
-        /* АНИМАЦИЯ: Светлячки (оставил, они хорошо сочетаются со снегом) */
-        .firefly {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            width: 4px;
-            height: 4px;
-            margin: -0.2em 0 0 9.8em;
-            animation: drift 200s alternate infinite;
-            pointer-events: none;
-            z-index: -1;
-            box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.4);
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-        }
-        .firefly::before {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            border-radius: 50%;
-            animation: drift 10s alternate infinite;
-        }
-        @keyframes drift {
-            0% { transform: rotate(0deg) translate(10px); }
-            100% { transform: rotate(360deg) translate(-10px); }
+            pointer-events: none; 
+            z-index: -2; /* Снег падает поверх фона */
         }
 
         .container {
@@ -91,6 +67,7 @@
             z-index: 1;
         }
 
+        /* Анимации появления */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -108,7 +85,7 @@
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            text-shadow: 0 0 20px rgba(0,0,0,0.8); /* Усилил тень для читаемости */
             color: #fff;
         }
 
@@ -144,16 +121,16 @@
             margin: 30px 0;
             letter-spacing: 3px;
             color: var(--accent-color);
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.6);
             transition: 0.3s;
         }
-        .date-block:hover { background: rgba(212, 175, 55, 0.1); transform: scale(1.05); }
+        .date-block:hover { background: rgba(212, 175, 55, 0.2); transform: scale(1.05); }
 
         .humor-text {
             font-style: italic;
             opacity: 0.95;
             margin-bottom: 40px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             padding: 20px;
             border-radius: 10px;
             border: 1px solid rgba(255,255,255,0.1);
@@ -163,7 +140,7 @@
         .timeline {
             text-align: left;
             margin-top: 40px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 15px;
             backdrop-filter: blur(5px);
@@ -236,11 +213,6 @@
     <div class="overlay"></div>
     <canvas id="snow-canvas"></canvas>
     
-    <div class="firefly" style="top:20%; left:20%; animation-duration: 14s;"></div>
-    <div class="firefly" style="top:50%; left:50%; animation-duration: 20s;"></div>
-    <div class="firefly" style="top:80%; left:30%; animation-duration: 17s;"></div>
-    <div class="firefly" style="top:30%; left:80%; animation-duration: 25s;"></div>
-    
     <div class="container">
         <h1 class="fade-in">АНДРЕЙ & ШУРА</h1>
         <div class="date-block fade-in delay-1">06.02.2026</div>
@@ -293,7 +265,7 @@
     </div>
 
     <script>
-        // --- Скрипт для снега ---
+        // --- СКРИПТ АНИМАЦИИ СНЕГА ---
         const canvas = document.getElementById('snow-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -306,15 +278,15 @@
         }
 
         function createFlakes() {
-            const maxFlakes = 150; // Количество снежинок
+            const maxFlakes = 100; // Количество снежинок
             for (let i = 0; i < maxFlakes; i++) {
                 flakes.push({
                     x: Math.random() * width,
                     y: Math.random() * height,
-                    radius: Math.random() * 3 + 1, // Размер
-                    speed: Math.random() * 1 + 0.5, // Скорость падения
-                    drift: Math.random() * 1 - 0.5, // Боковой снос
-                    opacity: Math.random() * 0.5 + 0.3 // Прозрачность
+                    radius: Math.random() * 2 + 1, // Размер точек
+                    speed: Math.random() * 1 + 0.5, // Скорость
+                    drift: Math.random() * 1 - 0.5, // Ветер
+                    opacity: Math.random() * 0.5 + 0.3 
                 });
             }
         }
@@ -339,13 +311,12 @@
                 f.y += f.speed;
                 f.x += f.drift;
 
-                // Если снежинка улетела вниз или вбок, возвращаем наверх
                 if (f.y > height) {
                     f.y = 0;
                     f.x = Math.random() * width;
                 }
                 if (f.x > width || f.x < 0) {
-                     f.drift *= -1; // Отскакиваем от краев
+                     f.drift *= -1;
                 }
             }
         }
