@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Андрей & Саша | The End</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-overlay: rgba(0, 0, 0, 0.65); /* Затемнение, чтобы текст читался на фото */
+            --accent-color: #d4af37; 
+            --text-color: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+
+        /* ФОНОВАЯ КАРТИНКА - БЕСЕДКА */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Фото панорамной беседки */
+            background-image: url('http://googleusercontent.com/image_collection/image_retrieval/4105147365677505966_0'); 
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-overlay);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            animation: fadeInDown 1.5s ease-out;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-top: 40px;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .date-block {
+            font-size: 1.5rem;
+            border-top: 1px solid var(--accent-color);
+            border-bottom: 1px solid var(--accent-color);
+            display: inline-block;
+            padding: 15px 40px;
+            margin: 30px 0;
+            letter-spacing: 3px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .humor-text {
+            font-style: italic;
+            opacity: 0.9; /* Чуть ярче, чтобы читалось на фоне фото */
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .timeline {
+            text-align: left;
+            margin-top: 40px;
+            background: rgba(0, 0, 0, 0.4); /* Темный фон под текстом для читаемости */
+            padding: 30px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .time {
+            font-weight: bold;
+            color: var(--accent-color);
+            min-width: 80px;
+            font-size: 1.2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: #000;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            margin-top: 30px;
+            transition: transform 0.2s, background 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #fff;
+        }
+
+        .btn-disabled {
+            background-color: rgba(50, 50, 50, 0.8);
+            color: #aaa;
+            cursor: not-allowed;
+            border: 1px solid #555;
+        }
+        
+        .btn-disabled:hover {
+            transform: none;
+            background-color: rgba(50, 50, 50, 0.8);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .date-block { font-size: 1.2rem; padding: 10px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-image"></div>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <h1>АНДРЕЙ & САША</h1>
+        <div class="date-block">06.02.2026</div>
+        
+        <p class="humor-text">
+            «Мы долго бегали, но от судьбы не уйдешь.<br>
+            Приглашаем вас стать свидетелями того, как мы добровольно<br>
+            обмениваем свободу на кольца.»
+        </p>
+
+        <h2>МЕСТО ПРЕСТУПЛЕНИЯ</h2>
+        <p><strong>Панорамная беседка "NA NEBO"</strong><br>
+        Мы забрались повыше, чтобы пути к отступлению были отрезаны.<br>
+        Лучший вид на город и никаких шансов сбежать.</p>
+
+        <h2>ХРОНОЛОГИЯ</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="time">17:00</span>
+                <span>Сбор гостей. Welcome-drink для храбрости.</span>
+            </div>
+            <div class="timeline-item">
+                <span class="time">17:30</span>
+                <span>Церемония. Точка невозврата.</span>
+            </div>
+            <div class="timeline-item">
+                <span class="time">18:00</span>
+                <span>Праздничный ужин (мы старались).</span>
+            </div>
+            <div class="timeline-item">
+                <span class="time">22:00</span>
+                <span>Финал. Освобождение заложников.</span>
+            </div>
+        </div>
+
+        <h2>ТЫ С НАМИ?</h2>
+        <p>Выбери правильную таблетку:</p>
+        
+        <a href="#" class="btn" onclick="sendToTelegram()">БУДУ И ВСЁ ВИДЕЛ!</a>
+        <br><br>
+        <button class="btn btn-disabled">НЕ БУДУ (Error 403)</button>
+
+    </div>
+
+    <script>
+        function sendToTelegram() {
+            // Твой номер телефона для ссылки (без плюса)
+            const phone = "79800012735"; 
+            
+            // Если есть никнейм в Telegram (например, @AndreySys), впиши его ниже в кавычки вместо null
+            // Это сделает ссылку более надежной.
+            const username = null; 
+
+            const text = "Привет! Я получил приглашение. Обязательно буду на свадьбе 06.02.2026! 🍷";
+            
+            let url = "";
+
+            if (username) {
+                // Открываем по нику
+                url = `https://t.me/${username}?start=wedding`;
+            } else {
+                // Открываем по номеру
+                url = `https://t.me/+${phone}`;
+            }
+            
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
