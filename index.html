@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Андрей & Саша | Game Over</title>
+    <title>Андрей & Шура | Game Over</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-overlay: rgba(0, 0, 0, 0.75); /* Темнее, для мрачности */
-            --accent-color: #d4af37; 
-            --text-color: #ffffff;
-            --error-color: #ff3333;
+            --bg-overlay: rgba(0, 0, 0, 0.8); /* Очень темно */
+            --accent-color: #d4af37; /* Золото */
+            --text-color: #e0e0e0;
+            --danger-color: #ff4444;
         }
 
         body, html {
@@ -21,19 +21,21 @@
             color: var(--text-color);
             scroll-behavior: smooth;
             overflow-x: hidden;
+            background-color: #000;
         }
 
-        /* ИСПРАВЛЕННЫЙ ФОН (HTTPS) - Вид на ночной город с высоты */
+        /* ФОН: Ночная панорама города с высоты (HTTPS) */
         .bg-image {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=2564&auto=format&fit=crop'); 
+            background-image: url('https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?q=80&w=2670&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
             z-index: -3;
+            filter: grayscale(30%); /* Чуть мрачнее */
         }
 
         .overlay {
@@ -42,14 +44,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--bg-overlay);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
             z-index: -2;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
             text-align: center;
             position: relative;
             z-index: 1;
@@ -57,121 +59,130 @@
 
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s forwards;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
         }
         .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.5s; }
-        .delay-3 { animation-delay: 0.8s; }
-        .delay-4 { animation-delay: 1.1s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-            letter-spacing: 2px;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: 900;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+            color: var(--accent-color);
+            text-shadow: 2px 2px 10px rgba(0,0,0,1);
         }
 
         h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-top: 50px;
-            color: var(--accent-color);
-            margin-bottom: 20px;
+            font-size: 1.6rem;
+            margin-top: 60px;
+            color: #fff;
+            margin-bottom: 25px;
             text-transform: uppercase;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            border-bottom: 2px solid var(--danger-color);
             display: inline-block;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
         
         p {
             font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
+            line-height: 1.7;
+            margin-bottom: 25px;
             font-weight: 300;
         }
 
         .date-block {
-            font-size: 1.5rem;
-            border: 1px solid var(--accent-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--danger-color);
+            border: 2px solid var(--danger-color);
             display: inline-block;
             padding: 15px 40px;
             margin: 30px 0;
-            letter-spacing: 3px;
-            background: rgba(0,0,0,0.3);
+            letter-spacing: 4px;
+            background: rgba(0,0,0,0.5);
+            text-shadow: 0 0 10px var(--danger-color);
         }
 
         .humor-text {
             font-style: italic;
-            opacity: 0.9;
-            margin-bottom: 40px;
+            opacity: 1;
+            margin-bottom: 50px;
             text-shadow: 1px 1px 2px rgba(0,0,0,1);
-            border-left: 3px solid var(--accent-color);
-            padding-left: 15px;
-            text-align: left;
-            margin-left: auto;
-            margin-right: auto;
-            max-width: 600px;
+            border: 1px solid #333;
+            background: rgba(0,0,0,0.6);
+            padding: 30px;
         }
+        .humor-text p { margin-bottom: 15px; }
+        .humor-text strong { color: var(--accent-color); }
 
         /* Таймлайн */
         .timeline {
             text-align: left;
             margin-top: 40px;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(20, 20, 20, 0.8);
             padding: 30px;
-            border-radius: 4px;
-            border-left: 2px solid var(--accent-color);
+            border: 1px solid #333;
         }
 
         .timeline-item {
             display: flex;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             align-items: flex-start;
+            border-left: 3px solid var(--danger-color);
+            padding-left: 20px;
         }
 
         .time {
-            font-weight: bold;
+            font-weight: 900;
             color: var(--accent-color);
-            min-width: 70px;
-            font-size: 1.2rem;
+            min-width: 75px;
+            font-size: 1.3rem;
             margin-right: 15px;
+            text-transform: uppercase;
         }
+        .desc strong { color: #fff; font-size: 1.1rem; display: block; margin-bottom: 5px; }
+        .desc { font-size: 0.95rem; color: #ccc; }
 
         /* Кнопки */
         .btn {
             display: inline-block;
-            background: var(--accent-color);
-            color: #000;
-            padding: 18px 40px;
+            background: var(--danger-color);
+            color: #fff;
+            padding: 20px 40px;
             text-decoration: none;
             font-weight: 700;
-            border-radius: 0; /* Строгие углы */
+            border-radius: 0;
             margin-top: 30px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            border: none;
+            border: 2px solid var(--danger-color);
             cursor: pointer;
             transition: 0.2s;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .btn:hover {
-            background: #fff;
-            transform: scale(1.02);
+            background: transparent;
+            color: var(--danger-color);
+            box-shadow: 0 0 20px var(--danger-color);
         }
 
         .btn-disabled {
             background: transparent;
-            color: #666;
+            color: #555;
             cursor: not-allowed;
-            border: 1px solid #444;
+            border: 2px solid #333;
             font-size: 0.8rem;
             padding: 15px 30px;
         }
-        .btn-disabled:hover { transform: none; background: transparent; }
+        .btn-disabled:hover { transform: none; background: transparent; box-shadow: none; }
 
         /* Модалка */
         #successModal {
@@ -180,22 +191,23 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #111;
-            border: 1px solid var(--accent-color);
+            background: #000;
+            border: 2px solid var(--danger-color);
             padding: 40px;
             z-index: 1000;
             text-align: center;
-            width: 80%;
-            max-width: 400px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            width: 85%;
+            max-width: 450px;
+            box-shadow: 0 0 50px rgba(255, 68, 68, 0.3);
         }
-        #successModal h3 { color: var(--accent-color); margin-top: 0; }
+        #successModal h3 { color: var(--accent-color); margin-top: 0; font-size: 2rem; text-transform: uppercase; }
+        #successModal p { font-size: 1.2rem; }
         
         .backdrop {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             z-index: 999;
         }
 
@@ -203,16 +215,17 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Конфетти */
         #confetti-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 9999;
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .humor-text { text-align: center; border-left: none; padding-left: 0;}
+            h1 { font-size: 2rem; }
+            .date-block { font-size: 1.4rem; padding: 10px 25px; }
+            .humor-text { padding: 20px; }
+            .timeline-item { flex-direction: column; }
+            .time { margin-bottom: 10px; }
         }
     </style>
 </head>
@@ -224,81 +237,81 @@
 
     <div class="backdrop" id="backdrop"></div>
     <div id="successModal">
-        <h3>СОБОЛЕЗНУЕМ</h3>
-        <p>То есть... Поздравляем! <br>Вы добавлены в список соучастников.<br>Назад дороги нет.</p>
-        <button class="btn" style="padding: 10px 30px; margin-top: 15px; font-size: 0.8rem;" onclick="closeModal()">Принято</button>
+        <h3>ПРИГОВОР ПОДПИСАН</h3>
+        <p>Ты в списке. Назад дороги нет.<br>Готовь конверт потолще, нам ещё ипотеку платить. 💀</p>
+        <button class="btn" style="padding: 10px 30px; margin-top: 20px; font-size: 0.9rem; background: transparent; color: var(--danger-color);" onclick="closeModal()">Обреченно кивнуть</button>
     </div>
 
     <div class="container">
-        <h1 class="fade-in">АНДРЕЙ & САША</h1>
+        <h1 class="fade-in">АНДРЕЙ & ШУРА</h1>
         <div class="date-block fade-in delay-1">06.02.2026</div>
         
         <div class="humor-text fade-in delay-2">
-            <p>«Здравый смысл нас покинул, и мы решили пожениться.</p>
-            <p>Это не учебная тревога. Мы действительно планируем официально испортить друг другу жизнь и подписать бумаги, от которых потом сложно избавиться.</p>
-            <p>Приходите посмотреть, как мы совершаем главную ошибку (или нет) в своей жизни.»</p>
+            <p>«Мы долго думали, как испортить себе жизнь, и решили, что ипотеки недостаточно. Нужен официальный брак.</p>
+            <p>Это не праздник любви, это <strong>поминки по нашей свободе</strong>. Мы приглашаем вас засвидетельствовать этот акт добровольного безумия.</p>
+            <p>Приходите посмотреть, как два взрослых человека подписываются на пожизненный стокгольмский синдром.»</p>
         </div>
 
         <h2 class="fade-in delay-3">МЕСТО ПРЕСТУПЛЕНИЯ</h2>
-        <p class="fade-in delay-3"><strong>Панорамная беседка "NA NEBO"</strong><br>
-        Мы забрались повыше. Там красиво, холодно, и никто не услышит наших криков.<br>
-        (Шутка. Там будет тепло и весело... наверное).</p>
+        <p class="fade-in delay-3" style="font-size: 1.2rem;"><strong>Панорамная беседка "NA NEBO"</strong><br>
+        Мы забрались повыше. Отсюда отличный вид на город, в котором мы больше никогда не будем гулять до утра.</p>
 
-        <h2 class="fade-in delay-3">ПРОТОКОЛ МЕРОПРИЯТИЯ</h2>
+        <h2 class="fade-in delay-3">ПЛАН ЭВАКУАЦИИ (ЕГО НЕТ)</h2>
         <div class="timeline fade-in delay-4">
             <div class="timeline-item">
                 <span class="time">17:00</span>
-                <span><strong>Общая анестезия.</strong><br>Сбор гостей и Welcome-drink, чтобы снизить уровень паники.</span>
+                <div class="desc"><strong>Общая анестезия.</strong><br>Сбор гостей. Наливаем сразу, чтобы вы не передумали и не сбежали.</div>
             </div>
             <div class="timeline-item">
                 <span class="time">17:30</span>
-                <span><strong>Сбор дани.</strong><br>Время для подарков и поздравлений (постарайтесь не плакать от жалости к жениху).</span>
+                <div class="desc"><strong>Сбор дани.</strong><br>Время для подарков. Напоминаем: тостеры и сервизы летят с балкона. Только хардкор (и деньги).</div>
             </div>
             <div class="timeline-item">
                 <span class="time">18:00</span>
-                <span><strong>Тайная вечеря.</strong><br>Ешьте как в последний раз. Алкоголь безлимитный, потому что трезвым на это смотреть невозможно.</span>
+                <div class="desc"><strong>Тайная вечеря.</strong><br>Ешьте как в последний раз. Алкоголь безлимитный, потому что трезвым на это смотреть больно.</div>
             </div>
             <div class="timeline-item">
                 <span class="time">22:00</span>
-                <span><strong>Амнистия.</strong><br>Освобождение заложников и разъезд по домам.</span>
+                <div class="desc"><strong>Амнистия.</strong><br>Вас выпустят. А мы останемся отбывать свой срок.</div>
             </div>
         </div>
 
         <h2 class="fade-in delay-4">ВЫ С НАМИ?</h2>
-        <p class="fade-in delay-4">Выберите свою судьбу:</p>
+        <p class="fade-in delay-4" style="font-weight: bold;">Выберите стул:</p>
         
         <div class="fade-in delay-4">
-            <button class="btn" onclick="celebrate()">БУДУ СВИДЕТЕЛЕМ КАТАСТРОФЫ</button>
+            <button class="btn" onclick="celebrate()">БУДУ СВИДЕТЕЛЕМ ЭТОГО КОШМАРА</button>
             <br><br>
-            <button class="btn btn-disabled">НАДЕЮСЬ, ВЫ ОДУМАЕТЕСЬ (Кнопка сломана)</button>
+            <button class="btn btn-disabled">У МЕНЯ СПРАВКА ОТ ВРАЧА (Кнопка не работает)</button>
         </div>
         
-        <footer style="margin-top: 50px; font-size: 0.7rem; opacity: 0.5;">
-            *Приходя на свадьбу, вы автоматически подписываете соглашение о неразглашении увиденного позора.
+        <footer style="margin-top: 60px; font-size: 0.7rem; opacity: 0.4; text-transform: uppercase;">
+            *Ваше присутствие означает согласие на участие в групповом помешательстве. Жалобы не принимаются.
         </footer>
 
     </div>
 
     <script>
-        // Конфетти (черно-золотые)
+        // Конфетти (Черный, красный, золото)
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         let confetti = [];
-        const colors = ['#d4af37', '#ffffff', '#000000']; 
+        const colors = ['#d4af37', '#ff4444', '#000000', '#333333']; 
 
         function createConfetti() {
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 200; i++) {
                 confetti.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
                     color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 6 + 3,
-                    speedY: Math.random() * 5 + 2,
+                    size: Math.random() * 7 + 3,
+                    speedY: Math.random() * 6 + 3,
                     speedX: Math.random() * 4 - 2,
-                    rotation: Math.random() * 360
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 10 - 5
                 });
             }
         }
@@ -315,7 +328,7 @@
                 
                 p.y += p.speedY;
                 p.x += p.speedX;
-                p.rotation += 5;
+                p.rotation += p.rotationSpeed;
 
                 if (p.y > canvas.height) confetti.splice(index, 1);
             });
