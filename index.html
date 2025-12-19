@@ -5,120 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Андрей & Шура | The Party</title>
     <style>
-        /* --- СТИЛИ (CSS) ВШИТЫ ПРЯМО СЮДА --- */
+        /* =========================================
+           КОНФИГУРАЦИЯ (CSS Variables)
+           Поменяйте цвета здесь на ваши!
+        ========================================= */
+        :root {
+            /* Основной цвет текста (заголовки) - например, Золотой */
+            --primary-color: #d4af37; 
+            
+            /* Вторичный цвет текста (описание) - например, Кремовый/Белый */
+            --secondary-color: #f8f5e6; 
+
+            /* Цвет кнопки */
+            --button-bg-color: #d4af37;
+            --button-text-color: #000000;
+
+            /* Затемнение фона. Если картинка слишком яркая, увеличьте 0.5 до 0.7 */
+            --overlay-darkness: rgba(0, 0, 0, 0.5); 
+        }
+
+        /* --- БАЗОВЫЕ СТИЛИ --- */
         body {
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Фиолетово-синий фон */
-            color: white;
             height: 100vh;
+            overflow: hidden; /* Скрываем скролл, чтобы снег не растягивал страницу */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            overflow: hidden; /* Чтобы анимация не делала прокрутку */
+            color: var(--secondary-color); /* Используем цвет из конфига */
+        }
+
+        /* --- ФОНОВАЯ КАРТИНКА --- */
+        /* ВАЖНО: Картинка должна называться background.jpg и лежать РЯДОМ с этим файлом */
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Путь ./ означает "в этой же папке" */
+            background-image: url('./background.jpg'); 
+            background-size: cover; /* Растянуть на весь экран */
+            background-position: center;
+            z-index: -2; /* Убираем на самый задний план */
+        }
+
+        /* Затемняющий слой поверх картинки, чтобы текст читался */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--overlay-darkness);
+            z-index: -1;
+            backdrop-filter: blur(3px); /* Легкое размытие фона для стиля */
+        }
+
+        /* --- КОНТЕНТ --- */
+        .container {
+            z-index: 10; /* Текст поверх всего */
+            padding: 20px;
+            max-width: 800px;
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            z-index: 10; /* Текст поверх анимации */
+            color: var(--primary-color); /* Используем цвет из конфига */
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         h2 {
             font-size: 1.5rem;
             font-weight: 300;
             margin-top: 0;
-            background-color: rgba(255, 255, 255, 0.2);
-            padding: 10px 20px;
-            border-radius: 20px;
-            z-index: 10;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block;
+            padding-bottom: 10px;
         }
 
         p {
             font-size: 1.2rem;
-            max-width: 600px;
-            padding: 20px;
-            z-index: 10;
+            line-height: 1.6;
+            margin-top: 30px;
         }
 
-        .button {
-            margin-top: 20px;
-            padding: 15px 30px;
-            background-color: #ff6b6b;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-            z-index: 10;
-            cursor: pointer;
-        }
-
-        .button:hover {
-            transform: scale(1.05);
-            background-color: #ff4757;
-        }
-
-        /* Анимация падающих элементов */
-        .emoji {
-            position: fixed;
-            top: -10%;
-            font-size: 2rem;
-            animation-name: fall;
-            animation-timing-function: linear;
-            z-index: 1;
-            opacity: 0.7;
+        /* --- СНЕГ (Procedural Generation) --- */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background-color: white; /* Снег всегда белый */
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 5; /* Снег падает ПЕРЕД фоном, но ЗА текстом */
         }
 
         @keyframes fall {
-            0% { top: -10%; transform: translateX(0) rotate(0deg); }
-            100% { top: 110%; transform: translateX(20px) rotate(360deg); }
+            0% { transform: translateY(0); }
+            100% { transform: translateY(105vh); }
+        }
+
+        /* Адаптив для мобилок */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            p { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <h1>Андрей & Шура</h1>
-    <h2>The Wedding Party</h2>
-    <p>Мы решили, что стандартные свадьбы — это скучно. Ждем вас на нашей вечеринке!</p>
-    
-    <a href="#" class="button">Я приду!</a>
+    <div class="background-image"></div>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <h1>Андрей & Шура</h1>
+        <h2>The Wedding Party</h2>
+        
+        <p>Приглашаем разделить с нами этот особенный день!<br>
+           Ждем вас на нашей зимней сказке.</p>
+           
+        <p style="margin-top: 40px; font-size: 1rem; opacity: 0.8;">
+            [Дата] | [Место]
+        </p>
+    </div>
 
     <script>
-        // Функция создания анимации (падающие сердечки и бокалы)
-        function createFallingElements() {
-            const container = document.body;
-            const symbols = ['❤️', '🥂', '✨', '💍', '🎉'];
+        document.addEventListener("DOMContentLoaded", () => {
+            const snowCount = 150; // Количество снежинок
+            const body = document.body;
             
-            // Создаем новый элемент каждые 300мс
-            setInterval(() => {
-                const el = document.createElement('div');
-                el.classList.add('emoji');
-                el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            for (let i = 0; i < snowCount; i++) {
+                const flake = document.createElement('div');
+                flake.classList.add('snowflake');
                 
-                // Случайная позиция по горизонтали
-                el.style.left = Math.random() * 100 + 'vw';
-                // Случайная скорость падения (от 3 до 8 секунд)
-                el.style.animationDuration = (Math.random() * 5 + 3) + 's';
-                // Случайный размер
-                el.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                
-                container.appendChild(el);
+                // Рандомизация параметров
+                const size = Math.random() * 5 + 2; // Размер 2-7px
+                const posX = Math.random() * window.innerWidth; // Позиция по ширине
+                const duration = Math.random() * 10 + 5; // Скорость падения (5-15 сек)
+                const delay = Math.random() * 5; // Задержка перед стартом
+                const opacity = Math.random() * 0.6 + 0.2; // Прозрачность
 
-                // Удаляем элемент после падения, чтобы не грузить память браузера (Garbage Collection)
-                setTimeout(() => {
-                    el.remove();
-                }, 8000);
-            }, 300);
-        }
+                flake.style.width = `${size}px`;
+                flake.style.height = `${size}px`;
+                flake.style.left = `${posX}px`;
+                // Используем CSS переменные для оптимизации производительности
+                flake.style.animationDuration = `${duration}s`;
+                flake.style.animationDelay = `-` + delay + `s`; // Отрицательная задержка, чтобы снег уже шел при загрузке
+                flake.style.opacity = opacity;
 
-        // Запуск скрипта после загрузки
-        createFallingElements();
+                body.appendChild(flake);
+            }
+        });
     </script>
 
 </body>
