@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Затемнение фона (0.75), чтобы белый текст читался на контрастном фото */
+            /* Затемнение фона (0.75), чтобы текст читался */
             --bg-overlay: rgba(0, 0, 0, 0.75); 
             --accent-color: #d4af37; /* Золото */
             --text-color: #ffffff;
@@ -31,8 +31,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* ВАЖНО: Файл картинки должен лежать рядом с index.html и называться bg.jpg */
-            background-image: url('bg.jpg'); 
+            
+            /* HARDCODE: Прямая ссылка на файл в репозитории */
+            background-image: url('https://leofftheslayer1326-create.github.io/wedding-invite/bg.jpg'); 
             
             background-size: cover;
             /* Центрируем по низу, чтобы купол был виден */
@@ -50,7 +51,7 @@
             z-index: -3;
         }
 
-        /* АНИМАЦИЯ: Светлячки (оставил для атмосферы, они легкие) */
+        /* АНИМАЦИЯ: Светлячки */
         .firefly {
             position: fixed;
             left: 50%;
@@ -227,6 +228,7 @@
 
     <div class="bg-image"></div>
     <div class="overlay"></div>
+    
     <div class="firefly" style="top:20%; left:20%; animation-duration: 14s;"></div>
     <div class="firefly" style="top:50%; left:50%; animation-duration: 20s;"></div>
     <div class="firefly" style="top:80%; left:30%; animation-duration: 17s;"></div>
@@ -284,4 +286,4 @@
     </div>
 
 </body>
-</html     
+</html>
