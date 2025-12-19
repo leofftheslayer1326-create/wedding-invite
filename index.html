@@ -7,8 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Увеличил затемнение до 0.75, так как фото купола яркое (неон/свет), 
-               иначе текст будет плохо читаться */
+            /* Затемнение фона (0.75), чтобы белый текст читался на контрастном фото */
             --bg-overlay: rgba(0, 0, 0, 0.75); 
             --accent-color: #d4af37; /* Золото */
             --text-color: #ffffff;
@@ -32,11 +31,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Ссылка на локальный файл. Убедись, что имя файла совпадает! */
+            /* ВАЖНО: Файл картинки должен лежать рядом с index.html и называться bg.jpg */
             background-image: url('bg.jpg'); 
             
             background-size: cover;
-            /* Центрируем, чтобы купол был виден и на мобиле, и на десктопе */
+            /* Центрируем по низу, чтобы купол был виден */
             background-position: center bottom; 
             z-index: -4;
         }
@@ -51,18 +50,7 @@
             z-index: -3;
         }
 
-        /* КАНВАС ДЛЯ СНЕГА */
-        #snow-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; 
-            z-index: -2; 
-        }
-
-        /* АНИМАЦИЯ: Светлячки */
+        /* АНИМАЦИЯ: Светлячки (оставил для атмосферы, они легкие) */
         .firefly {
             position: fixed;
             left: 50%;
@@ -239,8 +227,6 @@
 
     <div class="bg-image"></div>
     <div class="overlay"></div>
-    <canvas id="snow-canvas"></canvas>
-    
     <div class="firefly" style="top:20%; left:20%; animation-duration: 14s;"></div>
     <div class="firefly" style="top:50%; left:50%; animation-duration: 20s;"></div>
     <div class="firefly" style="top:80%; left:30%; animation-duration: 17s;"></div>
@@ -297,72 +283,5 @@
 
     </div>
 
-    <script>
-        // --- Скрипт для снега (оставил без изменений) ---
-        const canvas = document.getElementById('snow-canvas');
-        const ctx = canvas.getContext('2d');
-
-        let width, height;
-        let flakes = [];
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-
-        function createFlakes() {
-            const maxFlakes = 150; 
-            for (let i = 0; i < maxFlakes; i++) {
-                flakes.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    radius: Math.random() * 3 + 1,
-                    speed: Math.random() * 1 + 0.5,
-                    drift: Math.random() * 1 - 0.5,
-                    opacity: Math.random() * 0.5 + 0.3
-                });
-            }
-        }
-
-        function drawFlakes() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = '#FFF';
-            ctx.beginPath();
-            for (let i = 0; i < flakes.length; i++) {
-                const f = flakes[i];
-                ctx.globalAlpha = f.opacity;
-                ctx.moveTo(f.x, f.y);
-                ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2, true);
-            }
-            ctx.fill();
-            moveFlakes();
-        }
-
-        function moveFlakes() {
-            for (let i = 0; i < flakes.length; i++) {
-                const f = flakes[i];
-                f.y += f.speed;
-                f.x += f.drift;
-
-                if (f.y > height) {
-                    f.y = 0;
-                    f.x = Math.random() * width;
-                }
-                if (f.x > width || f.x < 0) {
-                     f.drift *= -1; 
-                }
-            }
-        }
-
-        function animateSnow() {
-            drawFlakes();
-            requestAnimationFrame(animateSnow);
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-        createFlakes();
-        animateSnow();
-    </script>
 </body>
 </html>
