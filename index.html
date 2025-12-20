@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Андрей & Шура | The Party</title>
+    <title>Андрей & Александра | The Party</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -20,46 +20,45 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
             
-            /* --- ГЛАВНОЕ ИСПРАВЛЕНИЕ --- */
-            /* 1. Задаем черный цвет как подложку */
+            /* --- ФОН И ПОДЛОЖКА --- */
             background-color: #000;
-            
-            /* 2. Накладываем слои: сверху затемнение, снизу картинка.
-                  linear-gradient(rgba...) создает эффект оверлея прямо поверх фото. 
-                  Ссылка жесткая, проверенная. */
             background-image: 
                 linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
                 url('https://leofftheslayer1326-create.github.io/wedding-invite/bg.jpg');
-
-            /* 3. Фиксируем фон, чтобы он стоял на месте при прокрутке */
             background-attachment: fixed;
             background-size: cover;
             background-position: center bottom;
         }
 
-        /* АНИМАЦИЯ: Светлячки */
+        /* --- АНИМАЦИЯ: Светлячки (Refactored) --- */
+        /* Используем более надежную технику блуждания */
         .firefly {
             position: fixed;
             left: 50%;
             top: 50%;
-            width: 4px;
-            height: 4px;
-            margin: -0.2em 0 0 9.8em;
-            animation: drift 200s alternate infinite;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 15px 4px rgba(212, 175, 55, 0.6); /* Усилил свечение */
             pointer-events: none;
-            z-index: 0; /* Поднял выше, чтобы было видно */
-            box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.4);
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
+            z-index: 0;
+            opacity: 0; /* Начальное состояние */
+            will-change: transform, opacity;
         }
-        .firefly::before {
-            content: ''; position: absolute; width: 100%; height: 100%;
-            border-radius: 50%;
-            animation: drift 10s alternate infinite;
+
+        /* Хаотичное движение по X и Y */
+        @keyframes floatX {
+            0%, 100% { transform: translateX(-100px); }
+            50% { transform: translateX(100px); }
         }
-        @keyframes drift {
-            0% { transform: rotate(0deg) translate(10px); }
-            100% { transform: rotate(360deg) translate(-10px); }
+        @keyframes floatY {
+            0%, 100% { transform: translateY(-50px); }
+            50% { transform: translateY(50px); }
+        }
+        @keyframes fade {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
         }
 
         .container {
@@ -90,6 +89,7 @@
             text-transform: uppercase;
             text-shadow: 0 0 20px rgba(0,0,0,0.5);
             color: #fff;
+            line-height: 1.2;
         }
 
         h2 {
@@ -203,7 +203,7 @@
         }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
+            h1 { font-size: 2.2rem; } /* Чуть уменьшил для длинного имени АЛЕКСАНДРА */
             .date-block { font-size: 1.2rem; padding: 10px 20px; }
             .timeline-item { flex-direction: column; }
             .time { margin-bottom: 5px; }
@@ -212,13 +212,14 @@
 </head>
 <body>
 
-    <div class="firefly" style="top:20%; left:20%; animation-duration: 14s;"></div>
-    <div class="firefly" style="top:50%; left:50%; animation-duration: 20s;"></div>
-    <div class="firefly" style="top:80%; left:30%; animation-duration: 17s;"></div>
-    <div class="firefly" style="top:30%; left:80%; animation-duration: 25s;"></div>
+    <div class="firefly" style="top: 20%; left: 10%; animation: floatX 18s ease-in-out infinite alternate, floatY 13s ease-in-out infinite alternate, fade 8s infinite;"></div>
+    <div class="firefly" style="top: 70%; left: 80%; animation: floatX 22s ease-in-out infinite alternate-reverse, floatY 16s ease-in-out infinite alternate, fade 10s infinite;"></div>
+    <div class="firefly" style="top: 40%; left: 60%; animation: floatX 15s ease-in-out infinite alternate, floatY 20s ease-in-out infinite alternate-reverse, fade 12s infinite;"></div>
+    <div class="firefly" style="top: 80%; left: 20%; animation: floatX 25s ease-in-out infinite alternate-reverse, floatY 12s ease-in-out infinite alternate-reverse, fade 9s infinite;"></div>
+    <div class="firefly" style="top: 10%; left: 90%; animation: floatX 19s ease-in-out infinite alternate, floatY 24s ease-in-out infinite alternate, fade 11s infinite;"></div>
     
     <div class="container">
-        <h1 class="fade-in">АНДРЕЙ & ШУРА</h1>
+        <h1 class="fade-in">АНДРЕЙ & АЛЕКСАНДРА</h1>
         <div class="date-block fade-in delay-1">06.02.2026</div>
         
         <div class="humor-text fade-in delay-2">
